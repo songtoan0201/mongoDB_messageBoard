@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Message Board</title>
+</head>
+
+<body>
+    <h1>The Dojo Message Board</h1>
+    <p>______________________________________________________________________________________________</p>
+    <!-- based on the structure of your messages, determine how to display them -->
+    <% if(messages.createError) { %> <% for (var x of messages.createError) { %>
+    <h3><%= x %></h3>
+    <% } %> <% } %>
+
+
+    <form action="/message/new" method="POST">
+        Name: <input type="text" name="name" /> Message:
+        <input type="text" name="description" />
+        <input type="submit" value="Post Message!" />
+    </form>
+
+    <% for (var msg of msgs) { %>
+    <h3>Name: <%= msg.name %> </h3>
+    <h3>Message: <%= msg.description %></h3>
+
+    <% for (var comment of msg.comments) { %>
+    <p>..........Name: <%= comment.name %> </p>
+    <p>..........Comment: <%= comment.content %></p>
+    <% } %>
+    <form action="/comment/new/<%=msg.id%>" method="POST">
+        Name: <input type="text" name="name" /> Comment:
+        <input type="text" name="content" />
+        <input type="submit" value="Post Comment!" />
+    </form>
+
+    <p>=======================================</p>
+    <% } %>
+</body>
+
+</html>
